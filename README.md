@@ -1,4 +1,4 @@
 # Wynprojects
-simple exercises on Ruby datatypes, syntax and methods
+weekly projects
 from Cohort 8, Wyncode
 #
