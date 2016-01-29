@@ -4,7 +4,7 @@ attr_accessor :name, :affiliation
     @name = name
     @affiliation = affiliation
 end
-def create_voter
+def create_entry
   puts "Type full name with a space: \n"
   puts " "
   @name = gets.chomp.to_s.upcase.strip
@@ -23,11 +23,17 @@ def confirm
 
       system 'clear'
      decor
-      puts"Your entry has been added to the Voters' Database"
-
+      puts"Your entry has been added to the Database"
+    
+      @voters_database = []
+      @voters_database << "#{@name}" + ":"+ "#{@affiliation}"
       sleep(2)
    else
-      exit
+     system 'clear'
+     decor
+      puts "Please, type |Y|or |N|"
+      decor
+      confirm
    end
 end
 def decor
