@@ -1,4 +1,4 @@
-require'/Users/MARKIII/Wynprojects/votedata/Person_class.rb'
+require'person_class.rb'
 
 class Main
 ###main menu for the program
