@@ -1,13 +1,16 @@
+require'/Users/MARKIII/Wynprojects/votedata/Person_class.rb'
 
-require'/Users/MARKIII/Wynprojects/Votersimulator/person_class.rb'
-require'/Users/MARKIII/Wynprojects/Votersimulator/polititian.rb'
-require'/Users/MARKIII/Wynprojects/Votersimulator/voter.rb'
-
-class World
+class Main
 ###main menu for the program
+def initialize(voters_database, polititians_database)
+@voters_database = []
+@polititians_database = []
+end
+
 def self.menu
+draw_line
     puts "Welcome to the Elections 2016!"
-    ask_user "How would you like to participate?:\n " , "|c| create\n |l| list \n |u| update \n |d| delete\n"
+    ask_user "How would you like to participate?:\n " , "|c| create\n |l| list \n |u| update \n |d| delete\n |e|exit\n\n"
 
      case @choice
      when 'c'
@@ -20,84 +23,80 @@ def self.menu
 
      when 'd'
        delete
+     when 'e'
+       exit
 
            else
              system 'clear'
-             raise "Invalid choice"
+             puts "Invalid choice. Please, choose again!"
+             sleep(1.5)
+             system 'clear'
+             self.menu
            end
 end
-end
+
 
 
 #######flow methods########################################
 #create method === WORKS!!!!
-def create
+def self.create
   ask_user "Would you like to create: \n ", "|v|Voter\n |p|Polititian\n"
   if @choice == 'p'
-    polititian = Voter.new
-    polititian.create_polititian
+    polititian = Polititian.new(@name, @affiliation)
+    polititian.create_entry
     polititian.confirm
 
-     system 'clear'
-     World.menu
-  else
+@voters_database << Polititian.new(@name, @affiliation)
+ ##the array gives NilClass(NoMethodError)
 
-    voter = Voter.new
-    voter.create_voter
-    voter.confirm
-    system 'clear'
-    World.menu
-  end
+   else
+     voter = Voter.new(@name, @affiliation)
+     voter.create_entry
+     voter.confirm
+ @polititians_database << Voter.new(@name, @affiliation)
+ ##the array gives NilClass(NoMethodError)
+
+end
+self.menu
 end
 
 #list method#######################################DOES NOT WORK!!!!
-def list
+def self.list
 ask_user "Would you like to list: \n ", "|v|Voter\n |p|Polititian\n"
+
 if @choice == 'p'
+puts "----Polititians' Database---"
 
-  polititian = Polititian.new
-  polititian.list_polititians
-  system 'clear'
-  World.menu
-else
+@polititian_database.each do |i|
+	puts "#{i.name}, #{i.affiliation}"
+	##the array gives NilClass(NoMethodError)
 
-   x = Voter.new
-   Voter.list_voters
-   system 'clear'
-  World.menu
-end
 end
 
-#update method##################################
-# def update
-#   ask_user "Would you like to update: \n ", "|v|Voter\n |p|Polititian\n"
-#   if @choice == 'p'
-#    polititian = Polititian.new
-#    polititian.update_polititian
-#   else
-#     voter = Voter.new
-#     voter.update_voter
-#   end
-# end
+ else
+   puts "----Voters' Database---"
 
-#delete##########################################
-# def delete
-# ask_user "Would you like to delete: \n ", "|v|Voter\n |p|Polititian\n"
-# if @choice == 'p'
-#   polititian = Polititian.new
-#   polititian.delete_polititian
-# else
-#   voter = Voter.new
-#   voter.delete_voter
-# end
-#
-# end
+   @voters_database.each do |i|
+   				puts "#{i.name}, #{i.affiliation}"
+   				##the array gives NilClass(NoMethodError)
 
+   			end
+end
+self.menu
 
+end
 
+def self.update
+  ask_user "Would you like to update: \n ", "|v|Voter\n |p|Polititian\n"
+self.menu
+end
 
-
-###additional methods
+def self.delete
+  ask_user "Would you like to delete: \n ", "|v|Voter\n |p|Polititian\n"
+  self.menu
+end
+end
+########################################additional methods
 def ask_user(question, options)
   say question
   say "#{options}"
@@ -108,15 +107,10 @@ def say(statement)
   statement.center(20).each_char {|c| putc c ; sleep 0.03; $stdout.flush }
 end
 
-###catch exeption
-# begin
-#   input == "#{@options}"
-# rescue
-#   puts "What would u like to do?"
-# end
+def draw_line
+  puts "--------------------------------------------------------"
+end
+##############################################
+#####call
 
-
-World.menu
-
-
-#
+Main.menu
