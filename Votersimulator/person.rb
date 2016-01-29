@@ -40,11 +40,7 @@ def decor
   puts " \n"
   puts "-------------------------------------\n "
 end
-def update_voter
-end
 
-def delete_voter
-end
 
 end
 
